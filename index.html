@@ -48,9 +48,9 @@ body:not(.birthday-unlocked) main{visibility:hidden}
  <div class="gate-card">
   <div style="font:11px Arial,sans-serif;letter-spacing:4px;text-transform:uppercase;color:#e9cb91">A little surprise is waiting</div>
   <h1>Not just yet, Khusbu ♡</h1>
-  <p>This little birthday world will open at <strong>11:55 PM on October 21</strong> — just five minutes before your birthday begins.</p>
+  <p>This little birthday world opens at <strong>11:25 PM on October 21</strong>. But don’t disappear after opening it — <strong>your biggest surprise arrives at midnight, 12:00 AM</strong>, when your birthday begins.</p>
   <div id="gateTimer">--:--:--</div>
-  <p style="font-size:13px;color:#d4c5d5">Bangladesh time · Come back when the final five minutes begin.</p>
+  <p style="font-size:13px;color:#d4c5d5">Bangladesh time · Open at 11:25 PM, then stay for the midnight surprise.</p>
  </div>
 </div>
 <main>
@@ -258,9 +258,9 @@ updateCountdown();window.setInterval(updateCountdown,1000);
   }
   function tick(){
     var now=Date.now(),p=dhakaParts(),year=Number(p.year);
-    var unlock=Date.parse(year+"-10-21T23:55:00+06:00");
+    var unlock=Date.parse(year+"-10-21T23:25:00+06:00");
     var birthdayEnd=Date.parse(year+"-10-23T00:00:00+06:00");
-    if(now>=birthdayEnd){unlock=Date.parse((year+1)+"-10-21T23:55:00+06:00");}
+    if(now>=birthdayEnd){unlock=Date.parse((year+1)+"-10-21T23:25:00+06:00");}
     if(now>=unlock && now<birthdayEnd){
       gate.style.display="none";
       document.body.classList.add("birthday-unlocked");
