@@ -84,7 +84,7 @@ body:not(.birthday-unlocked) main{visibility:hidden}
 <div class="label">a little photo journey</div>
 <p style="line-height:1.8">Eight snapshots. One at a time.<br>Eight little soundtracks, chosen for the mood of each memory.</p>
 <button class="btn" id="start" type="button">Begin the journey ♡</button>
-<div class="music">A different real recording for every photo</div>
+<div class="music">A gentle original birthday melody plays throughout the photo journey</div>
 <p class="hint">Tap Begin to start a real recording. A different track plays with each memory; pause it anytime.</p>
 </div>
 </section>
@@ -106,7 +106,7 @@ body:not(.birthday-unlocked) main{visibility:hidden}
 <p id="trackTitle" style="font-size:16px;color:var(--rose);margin:14px 0 8px">Theme 1 · Warm vintage jazz</p>
 <button class="btn secondary" id="musicToggle" type="button">Pause music ♪</button>
 <p class="hint" id="musicStatus" aria-live="polite">Your instrumental theme changes with each photo.</p>
-<audio id="visibleTrackPlayer" controls preload="none" style="display:block;width:100%;max-width:420px;margin:14px auto 0"></audio>
+
 </div>
 </section>
 <section id="ending" class="panel hidden">
@@ -145,24 +145,45 @@ var photos=[
 ["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Peacherine Rag","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/15/Scott_Joplin_-_Peacherine_Rag_%281901%29.ogg/Scott_Joplin_-_Peacherine_Rag_%281901%29.ogg.mp3","Peacherine Rag — Scott Joplin"],
 ["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Joyful pop finale","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/61/Happy_Happy_HardPopCoreTastic.ogg/Happy_Happy_HardPopCoreTastic.ogg.mp3","Happy Happy HardPopCoreTastic — CC0"]
 ];
-var index=0,musicOn=true,trackAudio=null;
+var index=0,musicOn=true,audioCtx=null,musicTimer=null,musicStep=0;
 function el(id){return document.getElementById(id);}
-function initTrackAudio(){
- trackAudio=el("visibleTrackPlayer");
- trackAudio.preload="none";trackAudio.loop=true;trackAudio.volume=0.8;
- trackAudio.addEventListener("error",function(){el("musicStatus").textContent="This music file failed to load. Check the connection and tap Play again.";});
- trackAudio.addEventListener("playing",function(){el("musicStatus").textContent="Now playing: "+photos[index][2]+".";});
+var melody=[523.25,659.25,783.99,659.25,587.33,698.46,880,698.46,523.25,659.25,783.99,987.77,880,783.99,659.25,587.33];
+function playNote(freq,when,duration,volume){
+ var osc=audioCtx.createOscillator(),gain=audioCtx.createGain(),filter=audioCtx.createBiquadFilter();
+ osc.type="triangle";osc.frequency.setValueAtTime(freq,when);
+ filter.type="lowpass";filter.frequency.setValueAtTime(1800,when);
+ gain.gain.setValueAtTime(0.0001,when);gain.gain.exponentialRampToValueAtTime(volume,when+0.035);gain.gain.exponentialRampToValueAtTime(0.0001,when+duration);
+ osc.connect(filter);filter.connect(gain);gain.connect(audioCtx.destination);osc.start(when);osc.stop(when+duration+0.04);
 }
-function stopMusic(){if(trackAudio)trackAudio.pause();}
-function startMusic(){
- if(!trackAudio)initTrackAudio();
+function scheduleMusic(){
+ if(!audioCtx||!musicOn)return;
+ var now=audioCtx.currentTime;
+ for(var i=0;i<4;i++){
+  var n=melody[(musicStep+i)%melody.length],t=now+i*0.78;
+  playNote(n,t,0.72,0.055);
+  playNote(n*0.5,t,0.95,0.024);
+  if(i===0||i===2){playNote(n*1.25,t+0.04,0.62,0.012);}
+ }
+ musicStep=(musicStep+4)%melody.length;
+ musicTimer=window.setTimeout(scheduleMusic,3050);
+}
+function stopMusic(){
+ musicOn=false;if(musicTimer)window.clearTimeout(musicTimer);musicTimer=null;
+ if(audioCtx&&audioCtx.state==="running")audioCtx.suspend();
+}
+async function startMusic(){
  var track=photos[index];
  el("trackTitle").textContent="Photo "+(index+1)+" · "+track[2];
- if(!musicOn){el("musicStatus").textContent="Music paused.";return;}
- trackAudio.pause();trackAudio.src=track[3];trackAudio.load();
- el("musicStatus").textContent="Loading "+track[2]+"…";
- var p=trackAudio.play();
- if(p&&p.then)p.then(function(){el("musicStatus").textContent="Now playing: "+track[2]+".";}).catch(function(){el("musicStatus").textContent="Tap ▶ on the audio player below to start "+track[2]+". Android may block autoplay.";});
+ if(!musicOn)return;
+ try{
+  var AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)throw new Error("Audio not supported");
+  audioCtx=audioCtx||new AC();
+  await audioCtx.resume();musicOn=true;
+  if(musicTimer)window.clearTimeout(musicTimer);
+  scheduleMusic();
+  el("musicStatus").textContent="Now playing: a gentle original birthday melody ♡";
+ }catch(e){el("musicStatus").textContent="Tap Play music again and make sure your phone is not on silent mode.";}
 }
 function dhakaNowParts(){
  var parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Dhaka",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
@@ -230,7 +251,7 @@ function render(){
  el("prev").style.visibility=index===0?"hidden":"visible";
  el("next").textContent=index===photos.length-1?"Reveal the final page ♡":"Next memory →";
  el("trackTitle").textContent="Theme "+(index+1)+" · "+photos[index][2];
- if(musicOn)startMusic();
+ if(musicOn&&audioCtx&&audioCtx.state==="running"){el("musicStatus").textContent="Now playing: a gentle original birthday melody ♡";}
 }
 function advance(){
  if(index<photos.length-1){index++;render();}
