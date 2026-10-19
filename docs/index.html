@@ -56,8 +56,8 @@ h1{font-size:clamp(44px,9vw,76px);font-weight:normal;color:var(--rose);margin:20
 <div class="label">a little photo journey</div>
 <p style="line-height:1.8">Eight snapshots. One at a time.<br>Eight little soundtracks, chosen for the mood of each memory.</p>
 <button class="btn" id="start" type="button">Begin the journey ♡</button>
-<div class="music">Joyful music changes with every photo</div>
-<p class="hint">Tap Begin to start the music. It changes with each memory, and you can pause it anytime.</p>
+<div class="music">A different real recording for every photo</div>
+<p class="hint">Tap Begin to start a real recording. A different track plays with each memory; pause it anytime.</p>
 </div>
 </section>
 <section id="journey" class="hidden">
@@ -107,18 +107,19 @@ h1{font-size:clamp(44px,9vw,76px);font-weight:normal;color:var(--rose);margin:20
 (function(){
 "use strict";
 var photos=[
-["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡","Ukulele sunshine",[523.25,659.25,783.99,659.25,587.33,659.25,783.99,1046.5],124,"sawtooth","strum"],
-["att.54QD7wvSOn6AV-kRyebXMICveIqTjUf_GEWzs564GQA.jpeg","keep this one close","Bright piano pop",[587.33,659.25,783.99,880,783.99,659.25,587.33,523.25],132,"triangle","piano"],
-["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you","Playful music box",[1046.5,1318.51,1174.66,1567.98,1318.51,1046.5,987.77,1174.66],142,"sine","musicbox"],
-["att.HKA2OXb2JBgJuUbPAfkJUDRZPB1YCfWHH9hhM6x0a3c.jpeg","soft little memories","Cheerful acoustic bounce",[523.25,587.33,659.25,783.99,659.25,587.33,523.25,440],112,"triangle","bounce"],
-["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember","Cinematic celebration",[392,493.88,587.33,783.99,698.46,587.33,493.88,440],96,"triangle","cinema"],
-["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter","Sunny bossa groove",[523.25,659.25,783.99,880,783.99,698.46,659.25,587.33],128,"sawtooth","bossa"],
-["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Gentle happy lullaby",[392,493.88,587.33,659.25,587.33,493.88,440,392],76,"sine","lullaby"],
-["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Birthday swing band",[659.25,783.99,880,1046.5,987.77,880,783.99,659.25],148,"square","swing"]
+["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡","Ukulele sunshine","https://commons.wikimedia.org/wiki/Special:Redirect/file/Ukulele_playing.ogg","Ukulele playing — Cassa342 (CC BY-SA 4.0)"],
+["att.54QD7wvSOn6AV-kRyebXMICveIqTjUf_GEWzs564GQA.jpeg","keep this one close","Jazz piano sparkle","https://commons.wikimedia.org/wiki/Special:Redirect/file/Jazz_Piano.ogg","Jazz Piano — Serolillo (CC BY 2.5)"],
+["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you","Happy pop celebration","https://commons.wikimedia.org/wiki/Special:Redirect/file/Happy_Happy_HardPopCoreTastic.ogg","Happy Happy HardPopCoreTastic — Mesostic (CC0)"],
+["att.HKA2OXb2JBgJuUbPAfkJUDRZPB1YCfWHH9hhM6x0a3c.jpeg","soft little memories","Ragtime piano bounce","https://commons.wikimedia.org/wiki/Special:Redirect/file/Original_Rags_-_Scott_Joplin_-_1899.ogg","Original Rags — Scott Joplin (public domain)"],
+["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember","Cheerful old-time rag","https://commons.wikimedia.org/wiki/Special:Redirect/file/Happy_Lulu_Rag_%281912%29.ogg","Happy Lulu Rag (1912) — public domain"],
+["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter","Vintage jazz party","https://commons.wikimedia.org/wiki/Special:Redirect/file/OriginalDixielandJassBand-JazzMeBlues.ogg","Jazz Me Blues — Original Dixieland Jass Band (public domain recording)"],
+["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Gentle piano interlude","https://commons.wikimedia.org/wiki/Special:Redirect/file/JellyRollMorton-PianoBoogie.ogg","Piano Boogie — Jelly Roll Morton (public domain)"],
+["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Big ragtime finale","https://commons.wikimedia.org/wiki/Special:Redirect/file/Country_Club_-_Ragtime_Two_Step_-_Scott_Joplin_-_1909.ogg","Country Club Ragtime — Scott Joplin (public domain)"]
 ];
-var index=0,ctx=null,timer=null,step=0,musicOn=true;
+var index=0,ctx=null,timer=null,step=0,musicOn=true,trackAudio=new Audio();
+trackAudio.preload='auto';trackAudio.loop=true;trackAudio.volume=0.72;
 function el(id){return document.getElementById(id);}
-function stopMusic(){if(timer){window.clearInterval(timer);timer=null;}}
+function stopMusic(){if(timer){window.clearInterval(timer);timer=null;}if(trackAudio)trackAudio.pause();}
 function note(freq,duration,wave,volume){
  if(!ctx||!musicOn)return;
  var now=ctx.currentTime,osc=ctx.createOscillator(),gain=ctx.createGain();
@@ -129,50 +130,14 @@ function note(freq,duration,wave,volume){
  osc.connect(gain);gain.connect(ctx.destination);osc.start(now);osc.stop(now+duration+0.03);
 }
 function startMusic(){
- var AudioCtx=window.AudioContext||window.webkitAudioContext;
- el("trackTitle").textContent="Theme "+(index+1)+" · "+photos[index][2];
- if(!AudioCtx){el("musicStatus").textContent="Music is not supported by this browser.";return;}
- if(!ctx)ctx=new AudioCtx();
- var resume=ctx.resume();if(resume&&resume.catch)resume.catch(function(){});
- stopMusic();step=0;
- var track=photos[index],notes=track[3],tempo=track[4],wave=track[5],style=track[6];
- el("musicStatus").textContent="Now playing: "+track[2]+". Each photo has its own rhythm and sound.";
- var beat=60000/tempo;
- timer=window.setInterval(function(){
-  if(!musicOn)return;
-  var n=step%notes.length, f=notes[n], next=notes[(n+2)%notes.length];
-  if(style==="strum"){
-   if(step%2===0){note(f,0.30,wave,0.025);note(f*1.26,0.27,wave,0.018);note(f*1.5,0.25,wave,0.016);}
-   else note(f,0.16,"triangle",0.012);
-  }else if(style==="piano"){
-   note(f,0.18,"triangle",0.048);note(f*2,0.10,"sine",0.012);
-   if(step%2===0)note([196,246.94,293.66,329.63][Math.floor(step/2)%4],0.34,"sine",0.025);
-  }else if(style==="musicbox"){
-   note(f,0.13,"sine",0.055);note(f*2,0.08,"sine",0.012);
-   if(step%4===0)note(f*1.5,0.11,"sine",0.012);
-  }else if(style==="bounce"){
-   note(f,0.22,"triangle",0.032);
-   if(step%2===0)note(130.81,0.12,"triangle",0.02);
-   if(step%4===2)note(next,0.09,"sine",0.02);
-  }else if(style==="cinema"){
-   note(f,0.58,"triangle",0.035);note(f*1.25,0.48,"sine",0.012);
-   if(step%2===0)note([130.81,164.81,196,220][Math.floor(step/2)%4],0.66,"sine",0.022);
-  }else if(style==="bossa"){
-   note(f,0.18,"sawtooth",0.018);
-   if(step%2===0)note(f*1.25,0.12,"triangle",0.025);
-   if(step%4===0)note([130.81,164.81,196,174.61][Math.floor(step/4)%4],0.22,"sine",0.028);
-   if(step%4===2)note(next*2,0.08,"sine",0.009);
-  }else if(style==="lullaby"){
-   note(f,0.60,"sine",0.035);if(step%2===0)note(next,0.72,"sine",0.014);
-   if(step%4===0)note(f/2,0.85,"triangle",0.012);
-  }else if(style==="swing"){
-   note(f,0.13,"square",0.018);
-   if(step%2===0)note(f*1.5,0.10,"triangle",0.025);
-   if(step%4===0)note([146.83,196,220,174.61][Math.floor(step/4)%4],0.20,"triangle",0.03);
-   if(step%2===1)note(notes[(n+3)%notes.length],0.08,"sine",0.015);
-  }
-  step++;
- },beat/2);
+ stopMusic();
+ var track=photos[index];
+ el("trackTitle").textContent="Photo "+(index+1)+" · "+track[2];
+ if(!musicOn){el("musicStatus").textContent="Music paused.";return;}
+ trackAudio.src=track[3];trackAudio.currentTime=0;
+ el("musicStatus").textContent="Loading: "+track[2]+"…";
+ var p=trackAudio.play();
+ if(p&&p.then)p.then(function(){el("musicStatus").textContent="Now playing: "+track[2]+". "+track[4];}).catch(function(){el("musicStatus").textContent="Tap Play music to start this recording. "+track[4];});
 }
 function dhakaNowParts(){
  var parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Dhaka",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
@@ -231,7 +196,7 @@ function render(){
  el("prev").style.visibility=index===0?"hidden":"visible";
  el("next").textContent=index===photos.length-1?"Reveal the final page ♡":"Next memory →";
  el("trackTitle").textContent="Theme "+(index+1)+" · "+photos[index][2];
- if(musicOn&&ctx)startMusic();
+ if(musicOn)startMusic();
 }
 function advance(){
  if(index<photos.length-1){index++;render();}
