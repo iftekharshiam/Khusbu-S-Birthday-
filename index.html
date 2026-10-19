@@ -162,14 +162,9 @@ function birthdayTarget(){
  if(Date.now()>=target+24*60*60*1000)target=Date.parse((year+1)+"-10-22T00:00:00+06:00");
  return target;
 }
-var countdownTarget=birthdayTarget(),birthdayShown=false,previewMode=new URLSearchParams(window.location.search).get("preview")==="1";
+var countdownTarget=birthdayTarget(),birthdayShown=false;
 function updateCountdown(){
  var now=Date.now(),parts=dhakaNowParts();
- if(previewMode){
-  ["cdDays","cdHours","cdMins","cdSecs"].forEach(function(id){el(id).textContent="00";});
-  if(!birthdayShown){birthdayShown=true;showBirthdaySurprise();}
-  return;
- }
  if(parts.month==="10"&&parts.day==="22"){
   ["cdDays","cdHours","cdMins","cdSecs"].forEach(function(id){el(id).textContent="00";});
   if(!birthdayShown){birthdayShown=true;showBirthdaySurprise();}
@@ -257,8 +252,6 @@ updateCountdown();window.setInterval(updateCountdown,1000);
 (function(){
   var gate=document.getElementById("earlyGate");
   var timer=document.getElementById("gateTimer");
-  var preview=new URLSearchParams(window.location.search).get("preview")==="1";
-  if(preview){gate.style.display="none";document.body.classList.add("birthday-unlocked");return;}
   function dhakaParts(){
     var a=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Dhaka",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date()),o={};
     a.forEach(function(p){o[p.type]=p.value;});return o;
