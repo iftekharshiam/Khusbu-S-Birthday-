@@ -27,7 +27,7 @@ const photos=[
 ["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter","Sunny bossa rhythm", [261.63,329.63,392,440], 106, "triangle"],
 ["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Peaceful lullaby", [196,246.94,293.66,392], 62, "sine"],
 ["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Birthday swing", [293.66,369.99,440,587.33], 124, "triangle"]
-];let index=0;const welcome=document.getElementById('welcome'),journey=document.getElementById('journey'),ending=document.getElementById('ending');const welcome=document.getElementById('welcome'),journey=document.getElementById('journey'),ending=document.getElementById('ending'),audio=document.getElementById('jazz');
+];let index=0;const welcome=document.getElementById('welcome'),journey=document.getElementById('journey'),ending=document.getElementById('ending');
 let audioContext=null, musicTimer=null, musicStep=0, musicOn=true;
 const musicToggle=document.getElementById('musicToggle');
 function stopMusic(){if(musicTimer){clearInterval(musicTimer);musicTimer=null;}}
