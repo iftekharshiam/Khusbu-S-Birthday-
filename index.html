@@ -31,6 +31,8 @@ h1{font-size:clamp(44px,9vw,76px);font-weight:normal;color:var(--rose);margin:20
 .footer{margin-top:34px;color:#bbaabd;font:11px Arial,sans-serif;letter-spacing:1px}
 .music{color:var(--muted);font:12px Arial,sans-serif;margin-top:10px}
 @media(max-width:520px){main{padding:22px 12px 36px}.panel{padding:20px 12px}.frame{padding:8px 8px 30px}.frame img{min-height:230px;height:48vh}.intro{font-size:16px}}
+
+.countdown{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:22px auto 10px}.count-unit{min-width:68px;padding:12px 10px;border:1px solid #f7c8df55;border-radius:14px;background:#ffffff0b}.count-num{display:block;color:var(--rose);font-size:clamp(25px,6vw,36px);font-variant-numeric:tabular-nums}.count-label{display:block;color:var(--muted);font:9px Arial,sans-serif;letter-spacing:2px;margin-top:4px}.count-title{color:var(--gold);font:11px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;margin-top:24px}.surprise{position:fixed;inset:0;z-index:99;display:none;align-items:center;justify-content:center;padding:18px;background:#160d21ed;backdrop-filter:blur(8px)}.surprise.show{display:flex;animation:flashbg .9s ease-in-out 3}.surprise-card{width:min(650px,100%);padding:30px 18px;border:1px solid #ffe2f0;border-radius:28px;background:linear-gradient(145deg,#6d2d63,#302046 65%,#191322);box-shadow:0 0 65px #ff8ac777;animation:popin .7s cubic-bezier(.2,1.5,.4,1)}.surprise-card h2{font-size:clamp(39px,10vw,68px);line-height:1.05;color:#ffe1ee;margin:18px 0}.surprise-card p{line-height:1.8}.sparkles{font-size:30px;letter-spacing:8px;animation:twinkle .8s ease-in-out infinite alternate}@keyframes popin{from{transform:scale(.55) rotate(-4deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}@keyframes flashbg{0%,100%{background:#160d21ed}50%{background:#5a1c52ed}}@keyframes twinkle{from{transform:scale(.95);filter:brightness(.8)}to{transform:scale(1.08);filter:brightness(1.5)}}
 </style>
 </head>
 <body>
@@ -40,6 +42,13 @@ h1{font-size:clamp(44px,9vw,76px);font-weight:normal;color:var(--rose);margin:20
 <section id="welcome">
 <h1>For Khusbu</h1>
 <p class="intro">Some memories deserve their own little moment. Take your time, turn each page, and let the photographs tell their story.</p>
+<div class="count-title">counting down to October 22 · Bangladesh time</div>
+<div class="countdown" aria-label="Countdown to Khusbu's birthday">
+<div class="count-unit"><span class="count-num" id="cdDays">--</span><span class="count-label">DAYS</span></div>
+<div class="count-unit"><span class="count-num" id="cdHours">--</span><span class="count-label">HOURS</span></div>
+<div class="count-unit"><span class="count-num" id="cdMins">--</span><span class="count-label">MINUTES</span></div>
+<div class="count-unit"><span class="count-num" id="cdSecs">--</span><span class="count-label">SECONDS</span></div>
+</div>
 <div class="panel">
 <div class="label">a little photo journey</div>
 <p style="line-height:1.8">Eight snapshots. One at a time.<br>Eight little soundtracks, chosen for the mood of each memory.</p>
@@ -78,6 +87,17 @@ h1{font-size:clamp(44px,9vw,76px);font-weight:normal;color:var(--rose);margin:20
 <p class="note">Wishing you beautiful beginnings, always.</p>
 <button class="btn" id="replay" type="button">Take the journey again ♡</button>
 </section>
+<div class="surprise" id="birthdaySurprise" role="dialog" aria-modal="true" aria-labelledby="birthdayTitle">
+<div class="surprise-card">
+<div class="sparkles">✦ ✨ ✦ 🎉 ✦</div>
+<div class="eyebrow">the moment has arrived</div>
+<h2 id="birthdayTitle">HAPPY BIRTHDAY,<br>KHUSBU!</h2>
+<p>Today is your day. May it bring laughter, wonderful surprises, and a year filled with peace, courage, and barakah.</p>
+<button class="btn" id="playBirthdaySong" type="button">▶ Play Happy Birthday song</button>
+<button class="btn secondary" id="closeSurprise" type="button">Let me see the page ♡</button>
+<p class="hint" id="birthdaySongStatus">A little birthday melody is waiting for you.</p>
+<div class="sparkles">🎂 🎈 💖 🎈 🎂</div>
+</div></div>
 <div class="footer">MADE WITH CARE · OCTOBER 22</div>
 </main>
 <script>
@@ -124,6 +144,56 @@ function startMusic(){
   step++;
  },60000/tempo);
 }
+function dhakaNowParts(){
+ var parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Dhaka",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
+ var out={};parts.forEach(function(p){out[p.type]=p.value;});return out;
+}
+function birthdayTarget(){
+ var p=dhakaNowParts(),year=Number(p.year),target=Date.parse(year+"-10-22T00:00:00+06:00");
+ if(Date.now()>=target+24*60*60*1000)target=Date.parse((year+1)+"-10-22T00:00:00+06:00");
+ return target;
+}
+var countdownTarget=birthdayTarget(),birthdayShown=false;
+function updateCountdown(){
+ var now=Date.now(),parts=dhakaNowParts();
+ if(parts.month==="10"&&parts.day==="22"){
+  ["cdDays","cdHours","cdMins","cdSecs"].forEach(function(id){el(id).textContent="00";});
+  if(!birthdayShown){birthdayShown=true;showBirthdaySurprise();}
+  return;
+ }
+ var diff=Math.max(0,countdownTarget-now),days=Math.floor(diff/86400000);diff%=86400000;
+ var hours=Math.floor(diff/3600000);diff%=3600000;var mins=Math.floor(diff/60000);var secs=Math.floor((diff%60000)/1000);
+ el("cdDays").textContent=String(days).padStart(2,"0");
+ el("cdHours").textContent=String(hours).padStart(2,"0");
+ el("cdMins").textContent=String(mins).padStart(2,"0");
+ el("cdSecs").textContent=String(secs).padStart(2,"0");
+}
+function showBirthdaySurprise(){
+ el("birthdaySurprise").classList.add("show");
+ document.body.style.overflow="hidden";
+ playBirthdaySong();
+}
+function playBirthdaySong(){
+ var AudioCtx=window.AudioContext||window.webkitAudioContext;
+ if(!AudioCtx){el("birthdaySongStatus").textContent="Your browser cannot play the song here.";return;}
+ if(!ctx)ctx=new AudioCtx();
+ var promise=ctx.resume();
+ if(promise&&promise.catch)promise.catch(function(){});
+ var melody=[
+ [392,.34],[392,.34],[440,.68],[392,.68],[523.25,.68],[493.88,1.05],
+ [392,.34],[392,.34],[440,.68],[392,.68],[587.33,.68],[523.25,1.05],
+ [392,.34],[392,.34],[783.99,.68],[659.25,.68],[523.25,.68],[493.88,.68],[440,1.05],
+ [698.46,.34],[698.46,.34],[659.25,.68],[523.25,.68],[587.33,.68],[523.25,1.1]
+ ];
+ var at=0;el("birthdaySongStatus").textContent="Playing the Happy Birthday melody!";
+ melody.forEach(function(item){
+  var delay=at*1000;
+  window.setTimeout(function(){if(ctx)note(item[0],item[1],"sine",0.075);},delay);
+  at+=item[1]+0.07;
+ });
+}
+el("playBirthdaySong").addEventListener("click",playBirthdaySong);
+el("closeSurprise").addEventListener("click",function(){el("birthdaySurprise").classList.remove("show");document.body.style.overflow="";});
 function render(){
  el("photo").src=photos[index][0];
  el("caption").textContent=photos[index][1];
@@ -156,6 +226,7 @@ el("replay").addEventListener("click",function(){
  index=0;musicOn=true;el("musicToggle").textContent="Pause music ♪";render();startMusic();window.scrollTo(0,0);
 });
 render();
+updateCountdown();window.setInterval(updateCountdown,1000);
 }());
 </script>
 </body>
