@@ -108,21 +108,21 @@ h1{font-size:clamp(44px,9vw,76px);font-weight:normal;color:var(--rose);margin:20
 (function(){
 "use strict";
 var photos=[
-["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡","Joyful pop celebration","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/61/Happy_Happy_HardPopCoreTastic.ogg/Happy_Happy_HardPopCoreTastic.ogg.mp3","CC0"],
-["att.54QD7wvSOn6AV-kRyebXMICveIqTjUf_GEWzs564GQA.jpeg","keep this one close","Jazz piano interlude","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/75/Jazz_Piano.ogg/Jazz_Piano.ogg.mp3","CC BY 2.5"],
-["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you","Vintage jazz party","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/62/OriginalDixielandJassBand-JazzMeBlues.ogg/OriginalDixielandJassBand-JazzMeBlues.ogg.mp3","Public-domain recording"],
-["att.HKA2OXb2JBgJuUbPAfkJUDRZPB1YCfWHH9hhM6x0a3c.jpeg","soft little memories","Ragtime piano bounce","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9f/Original_Rags_-_Scott_Joplin_-_1899.ogg/Original_Rags_-_Scott_Joplin_-_1899.ogg.mp3","Scott Joplin"],
-["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember","Country Club ragtime","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/06/Country_Club_-_Ragtime_Two_Step_-_Scott_Joplin_-_1909.ogg/Country_Club_-_Ragtime_Two_Step_-_Scott_Joplin_-_1909.ogg.mp3","Scott Joplin"],
-["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter","Maple Leaf Rag","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/09/Scott_Joplin_-_Maple_Leaf_Rag.ogg/Scott_Joplin_-_Maple_Leaf_Rag.ogg.mp3","Scott Joplin"],
-["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Peacherine Rag","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/15/Scott_Joplin_-_Peacherine_Rag_%281901%29.ogg/Scott_Joplin_-_Peacherine_Rag_%281901%29.ogg.mp3","Scott Joplin"],
-["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Joyful pop finale","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/61/Happy_Happy_HardPopCoreTastic.ogg/Happy_Happy_HardPopCoreTastic.ogg.mp3","CC0"]
+["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡","Joyful pop celebration","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/61/Happy_Happy_HardPopCoreTastic.ogg/Happy_Happy_HardPopCoreTastic.ogg.mp3","Happy Happy HardPopCoreTastic — CC0"],
+["att.54QD7wvSOn6AV-kRyebXMICveIqTjUf_GEWzs564GQA.jpeg","keep this one close","Jazz piano interlude","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/75/Jazz_Piano.ogg/Jazz_Piano.ogg.mp3","Jazz Piano — CC BY 2.5"],
+["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you","Vintage jazz party","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/62/OriginalDixielandJassBand-JazzMeBlues.ogg/OriginalDixielandJassBand-JazzMeBlues.ogg.mp3","Jazz Me Blues — public-domain recording"],
+["att.HKA2OXb2JBgJuUbPAfkJUDRZPB1YCfWHH9hhM6x0a3c.jpeg","soft little memories","Ragtime piano bounce","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9f/Original_Rags_-_Scott_Joplin_-_1899.ogg/Original_Rags_-_Scott_Joplin_-_1899.ogg.mp3","Original Rags — Scott Joplin"],
+["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember","Country Club ragtime","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/06/Country_Club_-_Ragtime_Two_Step_-_Scott_Joplin_-_1909.ogg/Country_Club_-_Ragtime_Two_Step_-_Scott_Joplin_-_1909.ogg.mp3","Country Club — Scott Joplin"],
+["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter","Maple Leaf Rag","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/09/Scott_Joplin_-_Maple_Leaf_Rag.ogg/Scott_Joplin_-_Maple_Leaf_Rag.ogg.mp3","Maple Leaf Rag — Scott Joplin"],
+["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Peacherine Rag","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/15/Scott_Joplin_-_Peacherine_Rag_%281901%29.ogg/Scott_Joplin_-_Peacherine_Rag_%281901%29.ogg.mp3","Peacherine Rag — Scott Joplin"],
+["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Joyful pop finale","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/61/Happy_Happy_HardPopCoreTastic.ogg/Happy_Happy_HardPopCoreTastic.ogg.mp3","Happy Happy HardPopCoreTastic — CC0"]
 ];
 var index=0,musicOn=true,trackAudio=null;
 function el(id){return document.getElementById(id);}
 function initTrackAudio(){
  trackAudio=el("visibleTrackPlayer");
  trackAudio.preload="none";trackAudio.loop=true;trackAudio.volume=0.8;
- trackAudio.addEventListener("error",function(){el("musicStatus").textContent="This music file failed to load. Check the internet connection and tap Play again.";});
+ trackAudio.addEventListener("error",function(){el("musicStatus").textContent="This music file failed to load. Check the connection and tap Play again.";});
  trackAudio.addEventListener("playing",function(){el("musicStatus").textContent="Now playing: "+photos[index][2]+".";});
 }
 function stopMusic(){if(trackAudio)trackAudio.pause();}
@@ -134,7 +134,7 @@ function startMusic(){
  trackAudio.pause();trackAudio.src=track[3];trackAudio.load();
  el("musicStatus").textContent="Loading "+track[2]+"…";
  var p=trackAudio.play();
- if(p&&p.then)p.then(function(){el("musicStatus").textContent="Now playing: "+track[2]+".";}).catch(function(){el("musicStatus").textContent="Tap ▶ on the audio player below to play "+track[2]+". Android may block autoplay.";});
+ if(p&&p.then)p.then(function(){el("musicStatus").textContent="Now playing: "+track[2]+".";}).catch(function(){el("musicStatus").textContent="Tap ▶ on the audio player below to start "+track[2]+". Android may block autoplay.";});
 }
 function dhakaNowParts(){
  var parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Dhaka",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
@@ -160,8 +160,7 @@ function updateCountdown(){
  el("cdMins").textContent=String(mins).padStart(2,"0");
  el("cdSecs").textContent=String(secs).padStart(2,"0");
 }
-var birthdayAudio=new Audio("https://upload.wikimedia.org/wikipedia/commons/transcoded/0/02/Happy_Birthday_to_You.ogg/Happy_Birthday_to_You.ogg.mp3");
-birthdayAudio.preload="none";birthdayAudio.volume=0.9;
+var birthdayCtx=null,birthdayTimers=[];
 function showBirthdaySurprise(){
  el("birthdaySurprise").classList.add("show");
  document.body.style.overflow="hidden";
@@ -169,10 +168,30 @@ function showBirthdaySurprise(){
  playBirthdaySong();
 }
 function playBirthdaySong(){
- el("birthdaySongStatus").textContent="Starting the Happy Birthday song…";
- birthdayAudio.pause();birthdayAudio.currentTime=0;
- var p=birthdayAudio.play();
- if(p&&p.then)p.then(function(){el("birthdaySongStatus").textContent="Happy Birthday song is playing!";}).catch(function(){el("birthdaySongStatus").textContent="Tap the button again to play the song on this phone.";});
+ var AC=window.AudioContext||window.webkitAudioContext;
+ if(!AC){el("birthdaySongStatus").textContent="Tap the birthday music button on a browser that supports audio.";return;}
+ if(!birthdayCtx)birthdayCtx=new AC();
+ if(birthdayCtx.state==="suspended")birthdayCtx.resume();
+ birthdayTimers.forEach(function(t){clearTimeout(t);});birthdayTimers=[];
+ var seq=[
+ [392,.34],[392,.34],[440,.68],[392,.68],[523.25,.68],[493.88,1.0],
+ [392,.34],[392,.34],[440,.68],[392,.68],[587.33,.68],[523.25,1.0],
+ [392,.34],[392,.34],[783.99,.68],[659.25,.68],[523.25,.68],[493.88,.68],[440,1.0],
+ [698.46,.34],[698.46,.34],[659.25,.68],[523.25,.68],[587.33,.68],[523.25,1.0]
+ ];
+ var at=0;
+ seq.forEach(function(n){
+  var delay=Math.round(at*1000);
+  birthdayTimers.push(setTimeout(function(){
+   if(!birthdayCtx)return;
+   var t=birthdayCtx.currentTime,osc=birthdayCtx.createOscillator(),gain=birthdayCtx.createGain();
+   osc.type="sine";osc.frequency.setValueAtTime(n[0],t);
+   gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(.12,t+.025);gain.gain.exponentialRampToValueAtTime(.0001,t+n[1]);
+   osc.connect(gain);gain.connect(birthdayCtx.destination);osc.start(t);osc.stop(t+n[1]+.04);
+  },delay));
+  at+=n[1]+.07;
+ });
+ el("birthdaySongStatus").textContent="Playing the Happy Birthday melody!";
 }
 el("playBirthdaySong").addEventListener("click",playBirthdaySong);
 el("closeSurprise").addEventListener("click",function(){el("birthdaySurprise").classList.remove("show");document.body.style.overflow="";});
