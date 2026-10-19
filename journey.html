@@ -10,19 +10,58 @@ main{width:min(920px,100%);margin:auto;padding:26px 18px 44px}.eyebrow{font:11px
 <div class="eyebrow">a little universe, just for you</div>
 <div style="font-size:34px;color:#ffb7d5;margin-top:18px">♡</div>
 <section id="welcome"><h1>For Khusbu</h1><p class="intro">Some memories deserve their own little moment. Take your time, turn each page, and let the photographs tell their story.</p>
-<div class="panel"><div class="label">a little photo journey</div><p style="line-height:1.8">Eight snapshots. One at a time.<br>A little jazz for the journey.</p><button class="btn" id="start">Begin the journey ♡</button><div class="music"><span class="dot"></span> Jazz Me Blues · Original Dixieland Jass Band</div><p class="hint">Sound begins when you press start. You can pause or adjust it anytime.</p></div></section>
+<div class="panel"><div class="label">a little photo journey</div><p style="line-height:1.8">Eight snapshots. One at a time.<br>Eight little soundtracks, chosen for the mood of each memory.</p><button class="btn" id="start">Begin the journey ♡</button><div class="music"><span class="dot"></span> A different instrumental theme for every photo</div><p class="hint">Tap Begin to start the music. It changes with each memory, and you can pause it anytime.</p><button class="btn" id="start">Begin the journey ♡</button><div class="music"><span class="dot"></span> Jazz Me Blues · Original Dixieland Jass Band</div><p class="hint">Sound begins when you press start. You can pause or adjust it anytime.</p></div></section>
 <section id="journey" class="hidden"><div class="label">little snapshots, beautiful memories</div><div class="progress" id="progress">MEMORY 1 OF 8</div>
 <div class="stage"><div class="frame" id="photoTap" role="button" tabindex="0" aria-label="Tap photo to reveal the next memory"><img id="photo" src="att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg" alt="A favourite memory"><div class="caption" id="caption">a little moment ♡</div></div></div>
 <p class="hint">Tap the photo or the button to turn the page.</p><div class="controls"><button class="btn secondary" id="prev">← Previous</button><button class="btn" id="next">Next memory →</button></div>
-<div class="panel"><div class="label">your soundtrack</div><audio id="jazz" controls loop preload="metadata" playsinline style="width:min(100%,360px);margin-top:12px"><source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/6/62/OriginalDixielandJassBand-JazzMeBlues.ogg/OriginalDixielandJassBand-JazzMeBlues.ogg.mp3" type="audio/mpeg"><source src="https://upload.wikimedia.org/wikipedia/commons/6/62/OriginalDixielandJassBand-JazzMeBlues.ogg" type="audio/ogg">Your browser does not support this audio.</audio><p class="hint" id="musicStatus">Vintage jazz for your memories. If it does not start automatically, tap play here.</p></div></section>
+<div class="panel"><div class="label">your soundtrack</div><p id="trackTitle" style="font-size:16px;color:var(--rose);margin:14px 0 8px">Theme 1 · Warm vintage jazz</p><button class="btn secondary" id="musicToggle" type="button">Pause music ♪</button><p class="hint" id="musicStatus">The instrumental theme changes as each photo appears.</p></div></section>
 <section id="ending" class="panel hidden"><div class="label">one last little page</div><h2 style="font-weight:normal;font-size:30px;color:var(--rose)">For your next orbit around the Sun 🌌</h2><div class="note">Happy Birthday, Khusbu! ♡<br><br>Born on a date when humanity dared to leap beyond its limits — from the first parachute descent in 1797 to the return of Apollo 7 from space in 1968. October 22 reminds me that life is about taking bold leaps, surviving uncertain journeys, and always finding our way back stronger. Another year, another orbit around the Sun. 🌌<br><br><span style="font-size:24px;color:#f6d89a">وَإِنَّ مَعَ الْعُسْرِ يُسْرًا</span><br><em>“Indeed, with hardship comes ease.”</em><br><span style="color:#f6d89a">— Qur’an 94:6</span><br><br>May Allah fill your new year with courage, peace, barakah, and beautiful beginnings. Ameen.<br><br><span style="color:#ffb7d5">Wishing you beautiful beginnings, always.</span></div><button class="btn secondary" id="replay">Revisit the memories ↺</button></section>
 <div class="footer">made with care, just for you · ♡</div></main>
 <script>
-const photos=[["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡"],["att.54QD7wvSOn6AV-kRyebXMICveIqTjUf_GEWzs564GQA.jpeg","keep this one close"],["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you"],["att.HKA2OXb2JBgJuUbPAfkJUDRZPB1YCfWHH9hhM6x0a3c.jpeg","soft little memories"],["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember"],["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter"],["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart"],["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile"]];let index=0;const welcome=document.getElementById('welcome'),journey=document.getElementById('journey'),ending=document.getElementById('ending'),audio=document.getElementById('jazz');
-function render(){const frame=document.getElementById('photoTap');frame.classList.remove('turning');void frame.offsetWidth;frame.classList.add('turning');setTimeout(()=>frame.classList.remove('turning'),220);document.getElementById('photo').src=photos[index][0];document.getElementById('caption').textContent=photos[index][1];document.getElementById('progress').textContent='MEMORY '+(index+1)+' OF '+photos.length;document.getElementById('prev').style.visibility=index===0?'hidden':'visible';document.getElementById('next').textContent=index===photos.length-1?'Reveal the final page ♡':'Next memory →';}
-function advance(){if(index<photos.length-1){index++;render()}else{journey.classList.add('hidden');ending.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}}
+const photos=[
+["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡","Warm vintage jazz", [261.63,329.63,392,493.88], 92, "triangle"],
+["att.54QD7wvSOn6AV-kRyebXMICveIqTjUf_GEWzs564GQA.jpeg","keep this one close","Dreamy piano tones", [293.66,349.23,440,523.25], 72, "sine"],
+["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you","Playful music-box", [329.63,392,493.88,587.33], 118, "sine"],
+["att.HKA2OXb2JBgJuUbPAfkJUDRZPB1YCfWHH9hhM6x0a3c.jpeg","soft little memories","Soft acoustic mood", [220,277.18,329.63,392], 78, "triangle"],
+["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember","Cinematic strings", [246.94,311.13,369.99,440], 66, "triangle"],
+["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter","Sunny bossa rhythm", [261.63,329.63,392,440], 106, "triangle"],
+["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Peaceful lullaby", [196,246.94,293.66,392], 62, "sine"],
+["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Birthday swing", [293.66,369.99,440,587.33], 124, "triangle"]
+];let index=0;const welcome=document.getElementById('welcome'),journey=document.getElementById('journey'),ending=document.getElementById('ending');const welcome=document.getElementById('welcome'),journey=document.getElementById('journey'),ending=document.getElementById('ending'),audio=document.getElementById('jazz');
+let audioContext=null, musicTimer=null, musicStep=0, musicOn=true;
+const musicToggle=document.getElementById('musicToggle');
+function stopMusic(){if(musicTimer){clearInterval(musicTimer);musicTimer=null;}}
+function playNote(freq,duration,shape,volume){
+  if(!audioContext||!musicOn)return;
+  const now=audioContext.currentTime, osc=audioContext.createOscillator(), gain=audioContext.createGain();
+  osc.type=shape;osc.frequency.setValueAtTime(freq,now);
+  gain.gain.setValueAtTime(0.0001,now);
+  gain.gain.exponentialRampToValueAtTime(volume,now+0.025);
+  gain.gain.exponentialRampToValueAtTime(0.0001,now+duration);
+  osc.connect(gain);gain.connect(audioContext.destination);osc.start(now);osc.stop(now+duration+0.03);
+}
+function startMusic(){
+  const Ctx=window.AudioContext||window.webkitAudioContext;
+  if(!Ctx){document.getElementById('musicStatus').textContent='This browser does not support the instrumental soundtrack.';return;}
+  if(!audioContext)audioContext=new Ctx();
+  audioContext.resume();stopMusic();musicStep=0;
+  const track=photos[index],notes=track[3],tempo=track[4],shape=track[5];
+  document.getElementById('trackTitle').textContent='Theme '+(index+1)+' · '+track[2];
+  document.getElementById('musicStatus').textContent='Playing an original instrumental theme for this photo.';
+  musicTimer=setInterval(()=>{
+    if(!musicOn)return;
+    const n=musicStep%notes.length;
+    playNote(notes[n],60/tempo*0.78,shape,0.055);
+    if(musicStep%4===0)playNote(notes[(n+2)%notes.length]/2,60/tempo*1.7,'sine',0.025);
+    if(musicStep%2===1)playNote(notes[(n+1)%notes.length]*2,60/tempo*0.28,'sine',0.012);
+    musicStep++;
+  },60000/tempo);
+}
+function render(){const frame=document.getElementById('photoTap');frame.classList.remove('turning');void frame.offsetWidth;frame.classList.add('turning');setTimeout(()=>frame.classList.remove('turning'),220);document.getElementById('photo').src=photos[index][0];document.getElementById('caption').textContent=photos[index][1];document.getElementById('progress').textContent='MEMORY '+(index+1)+' OF '+photos.length;document.getElementById('prev').style.visibility=index===0?'hidden':'visible';document.getElementById('next').textContent=index===photos.length-1?'Reveal the final page ♡':'Next memory →';if(musicOn&&audioContext)startMusic();else document.getElementById('trackTitle').textContent='Theme '+(index+1)+' · '+photos[index][2];}
+function advance(){if(index<photos.length-1){index++;render()}else{stopMusic();journey.classList.add('hidden');ending.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}}
 function back(){if(index>0){index--;render()}}
-document.getElementById('start').addEventListener('click',()=>{welcome.classList.add('hidden');journey.classList.remove('hidden');index=0;render();audio.volume=.35;audio.play().then(()=>{document.getElementById('musicStatus').textContent='Jazz is playing — enjoy the memories.'}).catch(()=>{document.getElementById('musicStatus').textContent='Tap play on the music player below to start the jazz.'});window.scrollTo({top:0,behavior:'smooth'})});
-audio.addEventListener('play',()=>{const s=document.getElementById('musicStatus');if(s)s.textContent='Jazz is playing — enjoy the memories.'});audio.addEventListener('error',()=>{const s=document.getElementById('musicStatus');if(s)s.textContent='If the music will not load, open the direct recording here.';});document.getElementById('next').addEventListener('click',advance);document.getElementById('prev').addEventListener('click',back);document.getElementById('photoTap').addEventListener('click',advance);document.getElementById('photoTap').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();advance()}});
-document.getElementById('replay').addEventListener('click',()=>{ending.classList.add('hidden');journey.classList.remove('hidden');index=0;render();audio.play().catch(()=>{});window.scrollTo({top:0,behavior:'smooth'})});render();
+document.getElementById('start').addEventListener('click',()=>{welcome.classList.add('hidden');journey.classList.remove('hidden');index=0;musicOn=true;musicToggle.textContent='Pause music ♪';render();startMusic();window.scrollTo({top:0,behavior:'smooth'})});
+musicToggle.addEventListener('click',()=>{musicOn=!musicOn;if(musicOn){musicToggle.textContent='Pause music ♪';startMusic();}else{stopMusic();musicToggle.textContent='Play music ♪';document.getElementById('musicStatus').textContent='Music paused. Tap Play music whenever you like.';}});
+document.getElementById('next').addEventListener('click',advance);document.getElementById('prev').addEventListener('click',back);document.getElementById('photoTap').addEventListener('click',advance);document.getElementById('photoTap').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();advance()}});
+document.getElementById('replay').addEventListener('click',()=>{ending.classList.add('hidden');journey.classList.remove('hidden');index=0;musicOn=true;musicToggle.textContent='Pause music ♪';render();startMusic();window.scrollTo({top:0,behavior:'smooth'})});render();
 </script></body></html>
