@@ -107,14 +107,14 @@ h1{font-size:clamp(44px,9vw,76px);font-weight:normal;color:var(--rose);margin:20
 (function(){
 "use strict";
 var photos=[
-["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡","Sunny birthday ukulele",[523.25,587.33,659.25,783.99,659.25,587.33,523.25,392],124,"triangle"],
-["att.54QD7wvSOn6AV-kRyebXMICveIqTjUf_GEWzs564GQA.jpeg","keep this one close","Sparkling happy piano",[587.33,659.25,783.99,880,783.99,659.25,587.33,523.25],132,"sine"],
-["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you","Playful music-box bounce",[659.25,783.99,880,1046.5,880,783.99,659.25,587.33],138,"sine"],
-["att.HKA2OXb2JBgJuUbPAfkJUDRZPB1YCfWHH9hhM6x0a3c.jpeg","soft little memories","Cheerful acoustic strum",[523.25,659.25,783.99,880,783.99,659.25,587.33,523.25],116,"triangle"],
-["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember","Feel-good cinematic glow",[587.33,698.46,783.99,880,987.77,880,783.99,698.46],120,"triangle"],
-["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter","Sunny bossa party",[523.25,659.25,783.99,880,783.99,659.25,523.25,587.33],130,"triangle"],
-["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Sweet cheerful lullaby",[392,523.25,587.33,659.25,783.99,659.25,587.33,523.25],108,"sine"],
-["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Big birthday swing",[659.25,783.99,880,1046.5,987.77,880,783.99,659.25],142,"triangle"]
+["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡","Ukulele sunshine",[523.25,659.25,783.99,659.25,587.33,659.25,783.99,1046.5],124,"sawtooth","strum"],
+["att.54QD7wvSOn6AV-kRyebXMICveIqTjUf_GEWzs564GQA.jpeg","keep this one close","Bright piano pop",[587.33,659.25,783.99,880,783.99,659.25,587.33,523.25],132,"triangle","piano"],
+["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you","Playful music box",[1046.5,1318.51,1174.66,1567.98,1318.51,1046.5,987.77,1174.66],142,"sine","musicbox"],
+["att.HKA2OXb2JBgJuUbPAfkJUDRZPB1YCfWHH9hhM6x0a3c.jpeg","soft little memories","Cheerful acoustic bounce",[523.25,587.33,659.25,783.99,659.25,587.33,523.25,440],112,"triangle","bounce"],
+["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember","Cinematic celebration",[392,493.88,587.33,783.99,698.46,587.33,493.88,440],96,"triangle","cinema"],
+["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter","Sunny bossa groove",[523.25,659.25,783.99,880,783.99,698.46,659.25,587.33],128,"sawtooth","bossa"],
+["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Gentle happy lullaby",[392,493.88,587.33,659.25,587.33,493.88,440,392],76,"sine","lullaby"],
+["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Birthday swing band",[659.25,783.99,880,1046.5,987.77,880,783.99,659.25],148,"square","swing"]
 ];
 var index=0,ctx=null,timer=null,step=0,musicOn=true;
 function el(id){return document.getElementById(id);}
@@ -133,19 +133,46 @@ function startMusic(){
  el("trackTitle").textContent="Theme "+(index+1)+" · "+photos[index][2];
  if(!AudioCtx){el("musicStatus").textContent="Music is not supported by this browser.";return;}
  if(!ctx)ctx=new AudioCtx();
- var resume=ctx.resume();
- if(resume&&resume.catch)resume.catch(function(){});
+ var resume=ctx.resume();if(resume&&resume.catch)resume.catch(function(){});
  stopMusic();step=0;
- var track=photos[index],notes=track[3],tempo=track[4],wave=track[5];
- el("musicStatus").textContent="Playing your joyful birthday melody for this photo.";
+ var track=photos[index],notes=track[3],tempo=track[4],wave=track[5],style=track[6];
+ el("musicStatus").textContent="Now playing: "+track[2]+". Each photo has its own rhythm and sound.";
+ var beat=60000/tempo;
  timer=window.setInterval(function(){
   if(!musicOn)return;
-  var n=step%notes.length;
-  note(notes[n],60/tempo*0.52,wave,0.038);
-  if(step%2===0)note(notes[(n+2)%notes.length],60/tempo*0.34,"sine",0.014);
-  if(step%4===0)note(notes[(n+4)%notes.length]/2,60/tempo*1.1,"triangle",0.016);
+  var n=step%notes.length, f=notes[n], next=notes[(n+2)%notes.length];
+  if(style==="strum"){
+   if(step%2===0){note(f,0.30,wave,0.025);note(f*1.26,0.27,wave,0.018);note(f*1.5,0.25,wave,0.016);}
+   else note(f,0.16,"triangle",0.012);
+  }else if(style==="piano"){
+   note(f,0.18,"triangle",0.048);note(f*2,0.10,"sine",0.012);
+   if(step%2===0)note([196,246.94,293.66,329.63][Math.floor(step/2)%4],0.34,"sine",0.025);
+  }else if(style==="musicbox"){
+   note(f,0.13,"sine",0.055);note(f*2,0.08,"sine",0.012);
+   if(step%4===0)note(f*1.5,0.11,"sine",0.012);
+  }else if(style==="bounce"){
+   note(f,0.22,"triangle",0.032);
+   if(step%2===0)note(130.81,0.12,"triangle",0.02);
+   if(step%4===2)note(next,0.09,"sine",0.02);
+  }else if(style==="cinema"){
+   note(f,0.58,"triangle",0.035);note(f*1.25,0.48,"sine",0.012);
+   if(step%2===0)note([130.81,164.81,196,220][Math.floor(step/2)%4],0.66,"sine",0.022);
+  }else if(style==="bossa"){
+   note(f,0.18,"sawtooth",0.018);
+   if(step%2===0)note(f*1.25,0.12,"triangle",0.025);
+   if(step%4===0)note([130.81,164.81,196,174.61][Math.floor(step/4)%4],0.22,"sine",0.028);
+   if(step%4===2)note(next*2,0.08,"sine",0.009);
+  }else if(style==="lullaby"){
+   note(f,0.60,"sine",0.035);if(step%2===0)note(next,0.72,"sine",0.014);
+   if(step%4===0)note(f/2,0.85,"triangle",0.012);
+  }else if(style==="swing"){
+   note(f,0.13,"square",0.018);
+   if(step%2===0)note(f*1.5,0.10,"triangle",0.025);
+   if(step%4===0)note([146.83,196,220,174.61][Math.floor(step/4)%4],0.20,"triangle",0.03);
+   if(step%2===1)note(notes[(n+3)%notes.length],0.08,"sine",0.015);
+  }
   step++;
- },60000/tempo);
+ },beat/2);
 }
 function dhakaNowParts(){
  var parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Dhaka",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
