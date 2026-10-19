@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#21152f">
+<title>Happy Birthday, Khusbu! ♡</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:18px;color:#fff7ef;font-family:Georgia,'Times New Roman',serif;text-align:center;background:radial-gradient(ellipse at 50% 10%,#67335f 0,#30203e 48%,#130f1c 100%);overflow-x:hidden}.glow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 25%,#ff8fca44,transparent 28%),radial-gradient(circle at 80% 75%,#ffd58c33,transparent 32%);animation:flash 2s ease-in-out infinite}.card{position:relative;width:min(620px,100%);padding:clamp(24px,6vw,44px) 20px;border:1px solid #ffe0efb8;border-radius:28px;background:linear-gradient(145deg,#6d2d63ee,#302046f5 65%,#191322f5);box-shadow:0 0 70px #ff8ac766,0 20px 70px #0006;animation:pop .75s cubic-bezier(.2,1.5,.4,1)}.eyebrow{font:11px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#e9cb91}.sparkles{font-size:27px;letter-spacing:7px;animation:twinkle .8s ease-in-out infinite alternate}h1{font-size:clamp(39px,10vw,68px);line-height:1.05;color:#ffe1ee;margin:22px 0;text-shadow:0 0 25px #ff9dcb66;font-weight:normal}.message{font-size:16px;line-height:1.9;max-width:460px;margin:0 auto 22px}.btn{display:block;width:min(340px,100%);margin:12px auto;padding:14px 18px;border-radius:40px;border:1px solid #ffe8f1;background:#ffd4e5;color:#392238;font-size:15px;cursor:pointer}.btn.secondary{background:transparent;color:#fff7ef;border-color:#ffffff70}.small{font:12px Arial,sans-serif;color:#e5d4e5;line-height:1.7}@keyframes pop{from{transform:scale(.65) rotate(-3deg);opacity:0}to{transform:scale(1);opacity:1}}@keyframes flash{0%,100%{opacity:.35}50%{opacity:1}}@keyframes twinkle{from{transform:scale(.92);filter:brightness(.8)}to{transform:scale(1.08);filter:brightness(1.5)}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important}}
+</style>
+</head>
+<body><div class="glow"></div><main class="card">
+<div class="sparkles">✦ ✨ ✦ 🎉 ✦</div><p class="eyebrow">THE MOMENT HAS ARRIVED</p>
+<h1>HAPPY BIRTHDAY,<br>KHUSBU!</h1>
+<p class="message">Today is your day. May it bring laughter, wonderful surprises, and a year filled with peace, courage, and barakah.</p>
+<button class="btn" id="play">▶ Play Happy Birthday song ♫</button>
+<button class="btn secondary" id="visit">Let me see the page ♡</button>
+<p class="small" id="status">A little birthday melody is waiting for you.</p>
+<div class="sparkles">🎂 🎈 💖 🎈 🎂</div>
+</main>
+<script>
+let ctx;let timers=[];document.getElementById('play').addEventListener('click',function(){const AC=window.AudioContext||window.webkitAudioContext;if(!AC){document.getElementById('status').textContent='Audio is not supported in this browser.';return}if(!ctx)ctx=new AC();if(ctx.state==='suspended')ctx.resume();timers.forEach(clearTimeout);timers=[];const seq=[[392,.34],[392,.34],[440,.68],[392,.68],[523.25,.68],[493.88,1],[392,.34],[392,.34],[440,.68],[392,.68],[587.33,.68],[523.25,1],[392,.34],[392,.34],[783.99,.68],[659.25,.68],[523.25,.68],[493.88,.68],[440,1],[698.46,.34],[698.46,.34],[659.25,.68],[523.25,.68],[587.33,.68],[523.25,1]];let at=0;seq.forEach(n=>{timers.push(setTimeout(()=>{let t=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=n[0];g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.12,t+.025);g.gain.exponentialRampToValueAtTime(.0001,t+n[1]);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+n[1]+.04)},at*1000));at+=n[1]+.07});document.getElementById('status').textContent='Playing the Happy Birthday melody!'});document.getElementById('visit').addEventListener('click',()=>location.href='./');
+</script></body></html>
