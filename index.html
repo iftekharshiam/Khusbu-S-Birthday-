@@ -145,9 +145,14 @@ function birthdayTarget(){
  if(Date.now()>=target+24*60*60*1000)target=Date.parse((year+1)+"-10-22T00:00:00+06:00");
  return target;
 }
-var countdownTarget=birthdayTarget(),birthdayShown=false;
+var countdownTarget=birthdayTarget(),birthdayShown=false,previewMode=new URLSearchParams(window.location.search).get("preview")==="1";
 function updateCountdown(){
  var now=Date.now(),parts=dhakaNowParts();
+ if(previewMode){
+  ["cdDays","cdHours","cdMins","cdSecs"].forEach(function(id){el(id).textContent="00";});
+  if(!birthdayShown){birthdayShown=true;showBirthdaySurprise();}
+  return;
+ }
  if(parts.month==="10"&&parts.day==="22"){
   ["cdDays","cdHours","cdMins","cdSecs"].forEach(function(id){el(id).textContent="00";});
   if(!birthdayShown){birthdayShown=true;showBirthdaySurprise();}
