@@ -107,17 +107,18 @@ h1{font-size:clamp(44px,9vw,76px);font-weight:normal;color:var(--rose);margin:20
 (function(){
 "use strict";
 var photos=[
-["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡","Ukulele sunshine","https://commons.wikimedia.org/wiki/Special:Redirect/file/Ukulele_playing.ogg","Ukulele playing — Cassa342 (CC BY-SA 4.0)"],
+["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡","Happy pop celebration","https://commons.wikimedia.org/wiki/Special:Redirect/file/Happy_Happy_HardPopCoreTastic.ogg","Happy Happy HardPopCoreTastic — Mesostic (CC0)"],
 ["att.54QD7wvSOn6AV-kRyebXMICveIqTjUf_GEWzs564GQA.jpeg","keep this one close","Jazz piano sparkle","https://commons.wikimedia.org/wiki/Special:Redirect/file/Jazz_Piano.ogg","Jazz Piano — Serolillo (CC BY 2.5)"],
-["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you","Happy pop celebration","https://commons.wikimedia.org/wiki/Special:Redirect/file/Happy_Happy_HardPopCoreTastic.ogg","Happy Happy HardPopCoreTastic — Mesostic (CC0)"],
+["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you","Jazz piano groove","https://commons.wikimedia.org/wiki/Special:Redirect/file/Jazz_piano_over_II-V-I_on_C.ogg","Jazz piano over II–V–I — Serolillo (CC BY 2.5)"],
 ["att.HKA2OXb2JBgJuUbPAfkJUDRZPB1YCfWHH9hhM6x0a3c.jpeg","soft little memories","Ragtime piano bounce","https://commons.wikimedia.org/wiki/Special:Redirect/file/Original_Rags_-_Scott_Joplin_-_1899.ogg","Original Rags — Scott Joplin (public domain)"],
-["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember","Cheerful old-time rag","https://commons.wikimedia.org/wiki/Special:Redirect/file/Happy_Lulu_Rag_%281912%29.ogg","Happy Lulu Rag (1912) — public domain"],
+["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember","Cheerful old-time rag","https://commons.wikimedia.org/wiki/Special:Redirect/file/Alfonso_Hart_-_Happy_Lulu_Rag_%281912%29.ogg","Happy Lulu Rag (1912) — public domain"],
 ["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter","Vintage jazz party","https://commons.wikimedia.org/wiki/Special:Redirect/file/OriginalDixielandJassBand-JazzMeBlues.ogg","Jazz Me Blues — Original Dixieland Jass Band (public domain recording)"],
 ["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Gentle piano interlude","https://commons.wikimedia.org/wiki/Special:Redirect/file/JellyRollMorton-PianoBoogie.ogg","Piano Boogie — Jelly Roll Morton (public domain)"],
 ["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Big ragtime finale","https://commons.wikimedia.org/wiki/Special:Redirect/file/Country_Club_-_Ragtime_Two_Step_-_Scott_Joplin_-_1909.ogg","Country Club Ragtime — Scott Joplin (public domain)"]
 ];
 var index=0,ctx=null,timer=null,step=0,musicOn=true,trackAudio=new Audio();
 trackAudio.preload='auto';trackAudio.loop=true;trackAudio.volume=0.72;
+trackAudio.addEventListener("error",function(){el("musicStatus").textContent="This recording could not load. Tap Next to try the next distinct track.";});
 function el(id){return document.getElementById(id);}
 function stopMusic(){if(timer){window.clearInterval(timer);timer=null;}if(trackAudio)trackAudio.pause();}
 function note(freq,duration,wave,volume){
