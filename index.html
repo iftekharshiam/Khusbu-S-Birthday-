@@ -330,9 +330,10 @@ updateCountdown();window.setInterval(updateCountdown,1000);
     }
     document.body.classList.remove("birthday-unlocked");
     gate.style.display="flex";
-    var d=Math.max(0,unlock-now),h=Math.floor(d/3600000);d%=3600000;
+    var d=Math.max(0,unlock-now),days=Math.floor(d/86400000);d%=86400000;
+    var h=Math.floor(d/3600000);d%=3600000;
     var m=Math.floor(d/60000);d%=60000;var sec=Math.floor(d/1000);
-    timer.textContent=String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0");
+    timer.textContent=(days>0?days+"d ":"")+String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0");
   }
   tick();window.setInterval(tick,1000);
 })();
