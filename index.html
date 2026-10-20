@@ -339,7 +339,7 @@ window.requestAnimationFrame(updateSubsecondCountdown);
     var fraction=Math.max(0,1-(d%1000)/1000);
     var micros=String(Math.floor(fraction*1000000)%1000000).padStart(6,"0");
     var nanos=String(Math.floor(fraction*1000000000)%1000000000).padStart(9,"0");
-    var precision=el("gatePrecision");if(precision)precision.textContent="MICROSECONDS · "+micros+"   NANOSECONDS · "+nanos;
+    var precision=document.getElementById("gatePrecision");if(precision)precision.textContent="MICROSECONDS · "+micros+"   NANOSECONDS · "+nanos;
   }
   tick();window.setInterval(tick,1000);
 })();
