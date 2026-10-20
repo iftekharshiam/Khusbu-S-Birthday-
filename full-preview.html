@@ -24,7 +24,8 @@
 <div class="unit"><span class="num" id="nanos">000000000</span><span class="small">NANOSECONDS</span></div></div></div>
 <div class="eyebrow">a little universe, just for you</div><h1 class="journeyTitle">For Khusbu ♡</h1><p>Some memories deserve their own little moment. Take your time, turn each page, and let the photographs tell their story.</p>
 <section id="welcome" class="panel"><div class="label">a little photo journey</div><p>Eight snapshots. One at a time.<br>Eight little soundtracks, chosen for the mood of each memory.</p><button id="begin">Begin the journey ♡</button><p class="small">Tap Begin to start the music. You can pause it anytime.</p></section>
-<section id="journey" class="hidden"><p id="progress" class="label">MEMORY 1 OF 8</p><div class="frame"><img id="photo" alt="A memory with Khusbu"><div id="caption" class="caption"></div></div><p id="trackTitle" style="color:var(--rose)">A gentle soundtrack</p><button class="secondary" id="toggleMusic">Pause music ♪</button><button class="secondary" id="prev">← Previous</button><button id="next">Next memory →</button></section>
+<section id="journey" class="hidden"><p id="progress" class="label">MEMORY 1 OF 8</p><div class="frame"><img id="photo" alt="A memory with Khusbu"><div id="caption" class="caption"></div></div><p id="trackTitle" style="color:var(--rose)">A gentle soundtrack</p><button class="secondary" id="toggleMusic">Pause music ♪</button>
+<audio id="journeyAudio" preload="none"></audio><button class="secondary" id="prev">← Previous</button><button id="next">Next memory →</button></section>
 <section id="ending" class="panel hidden"><div class="label">a birthday note, just for you</div><h1>Happy Birthday, Khusbu</h1><p>May this new year bring you courage, peace, barakah, and beautiful beginnings. May Allah guide your steps, protect your heart, and bring light to every path ahead.</p><p>Born on a date when humanity dared to leap beyond its limits — from the first parachute descent in 1797 to the return of Apollo 7 from space in 1968. October 22 reminds me that life is about taking bold leaps, surviving uncertain journeys, and always finding our way back stronger. Another year, another orbit around the Sun. 🌌</p>
 <p style="font-size:25px">وَإِنَّ مَعَ الْعُسْرِ يُسْرًا</p><p>“Indeed, with hardship comes ease.” — Qur’an 94:6</p><button id="replay">Take the journey again ♡</button></section>
 <div class="foot">MADE WITH CARE · OCTOBER 22</div>
@@ -35,35 +36,33 @@
 (function(){
 const $=id=>document.getElementById(id);
 const photos=[
-["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡","Joyful pop celebration"],
-["att.54QD7wvSOn6AV-kRyebXMICveIqTjUf_GEWzs564GQA.jpeg","keep this one close","Jazz piano interlude"],
-["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you","Vintage jazz party"],
-["att.HKA2OXb2JBgJuUbPAfkJUDRZPB1YCfWHH9hhM6x0a3c.jpeg","soft little memories","Ragtime piano bounce"],
-["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember","Country Club ragtime"],
-["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter","Maple Leaf Rag"],
-["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Peacherine Rag"],
-["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Joyful pop finale"]
+["att.1IFWlG1ucw-vr0ajp_CAyDFPo3XuhyM0Obam3KZOhOU.jpeg","a little moment ♡","Joyful pop celebration","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/61/Happy_Happy_HardPopCoreTastic.ogg/Happy_Happy_HardPopCoreTastic.ogg.mp3","Happy Happy HardPopCoreTastic — CC0"],
+["att.54QD7wvSOn6AV-kRyebXMICveIqTjUf_GEWzs564GQA.jpeg","keep this one close","Jazz piano interlude","https://upload.wikimedia.org/wikipedia/commons/transcoded/7/75/Jazz_Piano.ogg/Jazz_Piano.ogg.mp3","Jazz Piano — CC BY 2.5"],
+["att.FG5IuuN8T1fBE0AJ7K2JOE4eL3cA0_TOkznYNbhPnnU.jpeg","you, being you","Vintage jazz party","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/62/OriginalDixielandJassBand-JazzMeBlues.ogg/OriginalDixielandJassBand-JazzMeBlues.ogg.mp3","Jazz Me Blues — public-domain recording"],
+["att.HKA2OXb2JBgJuUbPAfkJUDRZPB1YCfWHH9hhM6x0a3c.jpeg","soft little memories","Ragtime piano bounce","https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9f/Original_Rags_-_Scott_Joplin_-_1899.ogg/Original_Rags_-_Scott_Joplin_-_1899.ogg.mp3","Original Rags — Scott Joplin"],
+["att.YZ0cUSIIPuNzqKLlJbOQI_Qmx6hxs2ACMeT-JmtqLyE.jpeg","a moment to remember","Country Club ragtime","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/06/Country_Club_-_Ragtime_Two_Step_-_Scott_Joplin_-_1909.ogg/Country_Club_-_Ragtime_Two_Step_-_Scott_Joplin_-_1909.ogg.mp3","Country Club — Scott Joplin"],
+["att.ZnSNnSguoGWdAKdwTRsOVjL5RSoTvZ9FGPFgN1XDMaI.jpeg","made a little brighter","Maple Leaf Rag","https://upload.wikimedia.org/wikipedia/commons/transcoded/0/09/Scott_Joplin_-_Maple_Leaf_Rag.ogg/Scott_Joplin_-_Maple_Leaf_Rag.ogg.mp3","Maple Leaf Rag — Scott Joplin"],
+["att.jPp0ZcLaHVLPT7BwwVPb0r8jO-w2iVu2uiEiSTCcGiE.jpeg","one for the heart","Peacherine Rag","https://upload.wikimedia.org/wikipedia/commons/transcoded/1/15/Scott_Joplin_-_Peacherine_Rag_%281901%29.ogg/Scott_Joplin_-_Peacherine_Rag_%281901%29.ogg.mp3","Peacherine Rag — Scott Joplin"],
+["att.lK_Gy4Kh3ARdKxX7Kh8wqDZqvxlDQGLCP1Z6hwF7nWM.jpeg","always worth a smile","Joyful pop finale","https://upload.wikimedia.org/wikipedia/commons/transcoded/6/61/Happy_Happy_HardPopCoreTastic.ogg/Happy_Happy_HardPopCoreTastic.ogg.mp3","Happy Happy HardPopCoreTastic — CC0"]
 ];
-let index=0,audioCtx=null,musicOn=false,notesTimer=null,step=0;
-function tone(freq,duration,when,volume=.045){
- if(!audioCtx)return;const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
- osc.type="sine";osc.frequency.value=freq;gain.gain.setValueAtTime(.0001,when);gain.gain.exponentialRampToValueAtTime(volume,when+.04);gain.gain.exponentialRampToValueAtTime(.0001,when+duration);
- osc.connect(gain);gain.connect(audioCtx.destination);osc.start(when);osc.stop(when+duration+.03);
+let index=0,musicOn=false;
+function stopMusic(){musicOn=false;$("journeyAudio").pause();}
+function startMusic(){musicOn=true;playTrackForPhoto(true);}
+function playTrackForPhoto(restart){
+ const p=photos[index],audio=$("journeyAudio");
+ $("trackTitle").textContent=p[2]+" · "+(p[4]||"Instrumental birthday music");
+ if(!audio||!p[3])return;
+ const current=audio.getAttribute("data-track-url")||"";
+ if(current!==p[3]){audio.pause();audio.src=p[3];audio.setAttribute("data-track-url",p[3]);audio.load();}
+ if(restart)audio.currentTime=0;
+ if(!musicOn){$("musicStatus").textContent="Music paused. Tap Play whenever you like.";return;}
+ const promise=audio.play();
+ if(promise&&promise.then)promise.then(()=>{$("musicStatus").textContent="Now playing: "+p[4];}).catch(()=>{$("musicStatus").textContent="Tap Play again to start this track. Check your internet connection and media volume.";});
 }
-const melody=[523.25,659.25,783.99,659.25,587.33,698.46,880,698.46,523.25,659.25,783.99,1046.5,880,783.99,659.25,587.33];
-function scheduleMusic(){
- if(!audioCtx||!musicOn)return;const now=audioCtx.currentTime;
- for(let i=0;i<4;i++){const n=melody[(step+i)%melody.length];tone(n,1.5,now+i*1.05,.025);if(i%2===0)tone(n/2,2.0,now+i*1.05,.014)}
- step=(step+4)%melody.length;notesTimer=setTimeout(scheduleMusic,4100);
-}
-async function startMusic(){
- try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();await audioCtx.resume();musicOn=true;clearTimeout(notesTimer);scheduleMusic();$("musicBtn").textContent="Ⅱ Pause soothing birthday music";$("musicStatus").textContent="Playing a soft, original piano-like birthday melody ♡";}
- catch(e){$("musicStatus").textContent="Your browser could not start audio. Tap Play again."}
-}
-function stopMusic(){musicOn=false;clearTimeout(notesTimer);$("musicBtn").textContent="♫ Play soothing birthday music";$("musicStatus").textContent="Music paused. Tap whenever you want to listen."}
-$("musicBtn").onclick=()=>musicOn?stopMusic():startMusic();
+$("journeyAudio").addEventListener("ended",function(){if(musicOn){this.currentTime=0;const p=this.play();if(p&&p.catch)p.catch(()=>{});}});
+$("journeyAudio").addEventListener("error",function(){if(musicOn)$("musicStatus").textContent="This track could not load. Check your internet connection, then tap Play again.";});
 function show(id){["lock","main","midnight"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden")}
-function render(){const p=photos[index];$("photo").src=p[0];$("photo").alt=p[1];$("caption").textContent=p[1];$("progress").textContent="MEMORY "+(index+1)+" OF "+photos.length;$("trackTitle").textContent="Theme "+(index+1)+" · "+p[2];$("prev").style.visibility=index===0?"hidden":"visible";$("next").textContent=index===photos.length-1?"Reveal the final page ♡":"Next memory →"}
+function render(){const p=photos[index];$("photo").src=p[0];$("photo").alt=p[1];$("caption").textContent=p[1];$("progress").textContent="MEMORY "+(index+1)+" OF "+photos.length;playTrackForPhoto(false);$("prev").style.visibility=index===0?"hidden":"visible";$("next").textContent=index===photos.length-1?"Reveal the final page ♡":"Next memory →"}
 $("begin").onclick=()=>{show("main");$("welcome").classList.add("hidden");$("journey").classList.remove("hidden");index=0;render();if(!musicOn)startMusic()};
 $("next").onclick=()=>{if(index<photos.length-1){index++;render()}else{$("journey").classList.add("hidden");$("ending").classList.remove("hidden");stopMusic()}};
 $("prev").onclick=()=>{if(index>0){index--;render()}};
