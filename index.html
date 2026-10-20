@@ -54,6 +54,7 @@ body:not(.birthday-unlocked) main{visibility:hidden}
   <h1>Not just yet, Khusbu ♡</h1>
   <p>This little page opens at <strong>11:55 PM on October 21</strong>. Until then, keep this page close and let the countdown do its thing.</p>
   <div id="gateTimer">--:--:--</div>
+  <div id="gatePrecision" style="font:11px Arial,sans-serif;letter-spacing:1px;color:#d4c5d5;margin-top:8px;font-variant-numeric:tabular-nums">MICROSECONDS · 000000 &nbsp; NANOSECONDS · 000000000</div>
   <p style="font-size:13px;color:#d4c5d5">Bangladesh time · This page opens when the countdown ends.</p>
   <aside class="midnight-note" aria-label="A little hint">
    <div class="note-label">Psst… one tiny hint ♡</div>
@@ -72,6 +73,8 @@ body:not(.birthday-unlocked) main{visibility:hidden}
 <div class="count-unit"><span class="count-num" id="cdHours">--</span><span class="count-label">HOURS</span></div>
 <div class="count-unit"><span class="count-num" id="cdMins">--</span><span class="count-label">MINUTES</span></div>
 <div class="count-unit"><span class="count-num" id="cdSecs">--</span><span class="count-label">SECONDS</span></div>
+<div class="count-unit"><span class="count-num" id="cdMicros">000000</span><span class="count-label">MICROSECONDS</span></div>
+<div class="count-unit"><span class="count-num" id="cdNanos">000000000</span><span class="count-label">NANOSECONDS</span></div>
 </div>
 </div>
 <div class="eyebrow">a little universe, just for you</div>
@@ -277,6 +280,13 @@ el("replay").addEventListener("click",function(){
 });
 render();
 updateCountdown();window.setInterval(updateCountdown,1000);
+function updateSubsecondCountdown(){
+ var rem=Math.max(0,countdownTarget-Date.now()),fraction=1-(rem%1000)/1000;
+ if(el("cdMicros"))el("cdMicros").textContent=String(Math.floor(fraction*1000000)%1000000).padStart(6,"0");
+ if(el("cdNanos"))el("cdNanos").textContent=String(Math.floor(fraction*1000000000)%1000000000).padStart(9,"0");
+ window.requestAnimationFrame(updateSubsecondCountdown);
+}
+window.requestAnimationFrame(updateSubsecondCountdown);
 }());
 </script>
 
@@ -334,6 +344,10 @@ updateCountdown();window.setInterval(updateCountdown,1000);
     var h=Math.floor(d/3600000);d%=3600000;
     var m=Math.floor(d/60000);d%=60000;var sec=Math.floor(d/1000);
     timer.textContent=(days>0?days+"d ":"")+String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0");
+    var fraction=Math.max(0,1-(d%1000)/1000);
+    var micros=String(Math.floor(fraction*1000000)%1000000).padStart(6,"0");
+    var nanos=String(Math.floor(fraction*1000000000)%1000000000).padStart(9,"0");
+    var precision=el("gatePrecision");if(precision)precision.textContent="MICROSECONDS · "+micros+"   NANOSECONDS · "+nanos;
   }
   tick();window.setInterval(tick,1000);
 })();
